@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Godot 独立游戏开发 · 学习路线图</title>
+<style>
+:root{
+  --bg:#0d1117; --bg2:#111823; --card:#151d2a; --line:#232d3d; --line2:#2d3a4d;
+  --text:#e6edf6; --dim:#8b9bb0; --dim2:#64748b;
+  --must:#f7768e; --later:#e0af68; --skip:#5c6b80;
+  --c0:#5c6b80; --c1:#e0af68; --c2:#3fb950; --acc:#58a6ff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:radial-gradient(1200px 600px at 50% -100px,#16202e,transparent),var(--bg);
+  color:var(--text);
+  font:16px/1.6 -apple-system,"Segoe UI",system-ui,"Microsoft YaHei","PingFang SC",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1200px;margin:0 auto;padding:0 22px}
+
+/* ---- hero ---- */
+.hero{padding:56px 0 26px}
+h1{margin:0 0 14px;font-size:38px;line-height:1.25;letter-spacing:.5px}
+h1 .dot{color:#3fb950}
+.sub{margin:0;color:var(--dim);font-size:16px;max-width:820px}
+.sub b{color:var(--text);font-weight:600}
+.legend{margin:16px 0 0;color:var(--dim2);font-size:13px;line-height:1.9}
+.legend kbd{background:#1c2534;border:1px solid var(--line2);border-radius:5px;padding:1px 6px;font-size:12px;color:var(--dim)}
+.legend .sw{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;vertical-align:1px}
+
+/* howto */
+.howto{margin:20px 0 0;background:#121a26;border:1px solid var(--line);border-radius:12px;padding:16px 20px 18px;color:var(--dim);font-size:14px;line-height:1.8}
+.howto b{color:#dbe6f3;font-weight:600}
+.howto ol{margin:8px 0 0;padding-left:20px}
+.howto li{margin:7px 0}
+.howto .note{color:#64748b;font-size:12.5px;margin-top:10px;padding-top:10px;border-top:1px solid #1b2331}
+/* progress row */
+.prow{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin:26px 0 10px}
+.pb{flex:1 1 240px;min-width:200px;height:10px;border-radius:6px;background:#232b3a;overflow:hidden}
+.pb>i{display:block;height:100%;width:0;border-radius:6px;background:linear-gradient(90deg,#2f81f7,#3fb950);transition:width .25s}
+.pct{flex:0 0 auto;font-size:16px;color:#f2f5fa;white-space:nowrap;font-variant-numeric:tabular-nums}
+.stats{display:flex;gap:22px;flex-wrap:wrap;align-items:center;color:var(--dim);font-size:15px}
+.stats b{color:var(--text);font-variant-numeric:tabular-nums}
+.stats .k{display:inline-flex;align-items:center;gap:7px}
+
+/* next up */
+.nextup{margin:26px 0 0;background:linear-gradient(180deg,#14202e,#121a26);border:1px solid #1f3d2d;border-radius:14px;padding:18px 22px}
+.nextup h3{margin:0 0 10px;font-size:15px;color:#56d364;letter-spacing:.3px}
+.nextup ol{margin:0;padding-left:20px;color:#cfdae8;font-size:15px}
+.nextup li{margin:6px 0}
+.nextup .tiny{color:var(--dim2);font-size:13px}
+
+/* ---- toolbar ---- */
+.toolbar{position:sticky;top:0;z-index:20;background:rgba(13,17,23,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);margin-top:30px}
+.tb-inner{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:12px 0}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{cursor:pointer;user-select:none;background:#141c28;border:1px solid var(--line2);color:var(--dim);border-radius:999px;padding:6px 13px;font-size:13.5px;transition:.15s}
+.chip:hover{color:var(--text);border-color:#3d4c63}
+.chip.on{background:#1b2a3d;border-color:#2f81f7;color:#cfe3ff}
+.spacer{flex:1 1 auto}
+input.q{width:200px;background:#0f1620;border:1px solid var(--line2);color:var(--text);border-radius:9px;padding:7px 11px;font-size:13.5px;outline:none}
+input.q:focus{border-color:#2f81f7}
+.btn{cursor:pointer;background:#141c28;border:1px solid var(--line2);color:var(--dim);border-radius:9px;padding:6px 11px;font-size:13px}
+.btn:hover{color:var(--text);border-color:#3d4c63}
+
+footer{color:#64748b;font-size:12.5px;line-height:1.9;padding:26px 0 70px;border-top:1px solid var(--line);margin-top:10px}
+/* ---- phases ---- */
+#app{padding:34px 0 60px}
+.phase{margin:0 0 46px}
+.phase-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.ptag{background:#1a2536;color:#8fb8ff;border-radius:7px;padding:2px 9px;font-size:12.5px;letter-spacing:.5px}
+.ptitle{margin:0;font-size:25px;letter-spacing:.5px}
+.pwhen{color:var(--dim2);font-size:13px}
+.pmeta{margin-left:auto;display:flex;align-items:center;gap:10px;color:var(--dim);font-size:13px}
+.pmeta .mb{width:110px;height:6px;border-radius:4px;background:#1e2836;overflow:hidden}
+.pmeta .mb>i{display:block;height:100%;background:linear-gradient(90deg,#2f81f7,#3fb950)}
+.pgoal{margin:14px 0 4px;color:var(--dim);font-size:15px}
+.pgoal b{color:#dbe6f3;font-weight:600}
+
+.grp{margin:22px 0 0}
+.grp-h{display:flex;align-items:center;gap:10px;color:var(--dim2);font-size:13px;letter-spacing:.6px;margin:0 0 12px}
+.grp-h:after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* goal card */
+.goal{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:0;margin:0 0 12px;overflow:hidden}
+.goal.s0{border-left:3px solid #2b3646}
+.goal.s1{border-left:3px solid var(--c1)}
+.goal.s2{border-left:3px solid var(--c2)}
+.goal-h{display:flex;align-items:center;gap:10px;padding:12px 15px;flex-wrap:wrap;cursor:pointer}
+.goal-h:hover{background:#18202e}
+.chev{width:14px;color:var(--dim2);font-size:11px;transition:transform .15s}
+.goal.closed .chev{transform:rotate(-90deg)}
+.gname{font-size:15.5px;font-weight:600;letter-spacing:.2px}
+.lv{font-size:11.5px;border-radius:6px;padding:1px 7px;border:1px solid transparent}
+.lv.must{color:#ffb3c0;background:#3a1c24;border-color:#5c2b36}
+.lv.later{color:#ffd9a0;background:#3a2c14;border-color:#5c4720}
+.lv.skip{color:#93a1b3;background:#232b36;border-color:#333e4d}
+.tm{color:var(--dim2);font-size:12.5px}
+.gp{margin-left:auto;display:flex;align-items:center;gap:9px}
+.gp .tiny{color:var(--dim2);font-size:12.5px;font-variant-numeric:tabular-nums}
+.gstat{font-size:12px;border-radius:999px;padding:2px 9px;white-space:nowrap}
+.gstat.s0{color:#8b9bb0;background:#1c2534}
+.gstat.s1{color:#ffd9a0;background:#33290f}
+.gstat.s2{color:#8ff0a4;background:#12301c}
+
+.goal-b{padding:0 15px 13px 15px}
+.chk{margin:0 0 10px;color:var(--dim2);font-size:12.5px}
+.chk b{color:#9fb3c8;font-weight:600}
+.tasks{display:flex;flex-direction:column;gap:1px}
+.task{display:flex;gap:9px;align-items:flex-start;padding:4px 6px;border-radius:7px;cursor:pointer;font-size:14px;color:#c6d3e2;line-height:1.55}
+.task:hover{background:#1a2333;color:#e6edf6}
+.task .bd{flex:0 0 auto;width:14px;height:14px;margin-top:4px;border-radius:50%;border:1.6px solid #44536a;position:relative}
+.task.t1 .bd{border-color:var(--c1);background:radial-gradient(circle,var(--c1) 0 3.2px,transparent 3.6px)}
+.task.t2 .bd{border-color:var(--c2);background:var(--c2)}
+.task.t2 .bd:after{content:"";position:absolute;left:3.2px;top:0.6px;width:4px;height:7px;border:1.7px solid #0d1117;border-top:0;border-left:0;transform:rotate(42deg)}
+.task.t2 .tx{color:#7e8ea4}
+.task.t1 .tx{color:#dfe8f3}
+.goal.closed .goal-b{display:none}
+.empty{color:var(--dim2);text-align:center;padding:50px 0;font-size:15px}
+@media(max-width:720px){
+  h1{font-size:29px}
+  .pmeta{margin-left:0;width:100%}
+  input.q{width:100%}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Godot 独立游戏开发 · 学习路线图 <span class="dot">.</span></h1>
+    <p class="sub">
+      大目标（每一项技能）拆成可点击的小目标（具体动作）。每个小目标都能标 <b>未学 / 学习中 / 已学</b>；
+      大目标的状态由小目标自动汇总，<b>Shift+点大目标</b>可一键整组标记。进度存在本机浏览器里。
+    </p>
+    <div class="howto">
+      <b>怎么用</b>
+      <ol>
+        <li><b>先把已经会的点掉。</b>单击小目标循环「未学 → 学习中 → 已学」，掌握了的直接跳到已学。不要从零开始勾，那样第一天就想放弃。</li>
+        <li><b>只盯「接下来该做的 3 件事」。</b>每次打开先看这一块——那是一周内该动的动作，不用自己规划顺序。</li>
+        <li><b>每周日点一次。</b>花 5 分钟把这一周动过的小目标标上状态，比每天点更有用。</li>
+        <li><b>用「备份」导出一次。</b>进度存在本机浏览器，清缓存或换设备会丢，JSON 文件随时可以「恢复」。</li>
+      </ol>
+      <div class="note">单文件静态网页：不联网、不收集任何数据，进度只存在你自己的浏览器里。内容面向「零基础起步、想做独立游戏、同时需要就业兜底」的软件工程本科生；时间是建议值，按自己的节奏调整。</div>
+    </div>
+    <div class="legend">
+      <span class="sw" style="background:#44536a"></span>未学
+      <span style="margin:0 14px 0 4px"></span>
+      <span class="sw" style="background:#e0af68"></span>学习中
+      <span style="margin:0 14px 0 4px"></span>
+      <span class="sw" style="background:#3fb950"></span>已学
+      &nbsp;·&nbsp;
+      <kbd>点小目标</kbd> 三态切换 &nbsp;
+      <kbd>Shift</kbd>+点 反向 &nbsp;
+      <kbd>点大目标标题</kbd> 折叠 &nbsp;
+      <kbd>Shift</kbd>+点 整组标记
+    </div>
+
+    <div class="prow">
+      <div class="pb"><i id="barAll"></i></div>
+      <div class="pct"><span id="pctAll">0%</span> · <span id="fracAll">0/0</span></div>
+    </div>
+    <div class="stats">
+      <span class="k"><span class="sw" style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#3fb950"></span>已学 <b id="n2">0</b></span>
+      <span class="k"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#e0af68"></span>学习中 <b id="n1">0</b></span>
+      <span class="k"><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#44536a"></span>未学 <b id="n0">0</b></span>
+      <span id="skipNote" style="color:#64748b;font-size:13px"></span>
+    </div>
+
+    <div class="nextup">
+      <h3>接下来该做的 3 件事</h3>
+      <ol id="nextList"></ol>
+      <div class="tiny" id="nextHint"></div>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="wrap tb-inner">
+    <div class="chips" id="filters">
+      <div class="chip on" data-f="all">全部</div>
+      <div class="chip" data-f="must">只看必修</div>
+      <div class="chip" data-f="0">未学</div>
+      <div class="chip" data-f="1">学习中</div>
+      <div class="chip" data-f="2">已学</div>
+      <div class="chip" id="hideSkip">隐藏可跳过</div>
+    </div>
+    <div class="spacer"></div>
+    <input class="q" id="q" placeholder="搜索技能 / 小目标…">
+    <button class="btn" id="exportBtn">备份</button>
+    <button class="btn" id="importBtn">恢复</button>
+    <button class="btn" id="resetBtn">重置</button>
+  </div>
+</div>
+
+<main id="app"><div class="wrap"></div></main>
+<footer>
+  <div class="wrap">
+    本页面是单文件静态网页，可离线打开、可自由分享。学习进度保存在本机浏览器的 localStorage 中；换浏览器、清缓存或使用无痕模式会丢失，请用「备份」导出 JSON 保存。
+    每个大目标都写了「验收标准」——达到那条标准再标「已学」，比凭感觉勾选可靠得多。
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   数据结构
+   阶段: {id,t(标题),w(时间),goal(阶段大目标),gs:[{name(分组),items:[目标…]}]}
+   目标: {id,n(名称),lv(must|later|skip),tm(预计时间),chk(验收标准),ts:[小目标…]}
+   小目标状态: 0 未学 / 1 学习中 / 2 已学，存 localStorage
+   ============================================================ */
+const PHASES=[
+{
+  id:"p0", t:"编程地基", w:"起步阶段 · 约 6 个月",
+  goal:"把「想法 → 能跑的代码」这条路打通：C 写熟，再用三个控制台小游戏把游戏逻辑练成肌肉记忆。",
+  gs:[
+   {name:"C 语言核心", items:[
+     {id:"c_syntax", n:"C 语法核心", lv:"must", tm:"约 3 周", chk:"不查资料写出 200 行以内、能编译运行的程序", ts:[
+       "变量与类型：int/float/char 的声明、初始化、printf 格式化输出",
+       "运算符与表达式：算术、比较、逻辑运算，优先级不清楚就加括号",
+       "分支：if / else if / else、switch 与漏写 break 的坑",
+       "循环：for / while / do-while，会写嵌套循环和提前 break",
+       "函数：参数、返回值、局部变量作用域、声明与定义分开写",
+       "数组与字符串：遍历、下标越界、strlen / strcpy / strcmp 会用"
+     ]},
+     {id:"c_ptr", n:"指针与内存模型", lv:"must", tm:"约 4 周", chk:"能画出「变量—地址—指针」的关系图，并解释一次崩溃的原因", ts:[
+       "地址与解引用：& 取地址、* 取值，先在纸上画出内存格",
+       "指针与数组：数组退化成指针、指针算术、用指针遍历数组",
+       "函数传参：按值传递 vs 传指针修改调用方的变量",
+       "动态内存：malloc / calloc / free，写一次「谁分配谁释放」",
+       "常见崩溃：野指针、越界写、重复 free、内存泄漏，各复现一次"
+     ]},
+     {id:"c_struct", n:"结构体与自定义类型", lv:"must", tm:"约 3 周", chk:"用结构体数组写出「玩家 + 敌人列表」并正确更新", ts:[
+       "struct 的定义、初始化、成员访问",
+       "typedef 起别名、结构体数组、嵌套结构体",
+       "结构体指针与 -> 运算符、按值 vs 按指针传结构体",
+       "enum 表示游戏状态（菜单 / 游戏中 / 暂停 / 结算）"
+     ]},
+     {id:"c_file", n:"文件读写与存档", lv:"later", tm:"约 2 周", chk:"能把游戏进度写进文件、下次启动读回来", ts:[
+       "fopen / fclose 的模式区别（r / w / a / b）",
+       "fprintf / fscanf 写入与读取结构化的存档",
+       "解析文本配置：一行一项、跳过注释行、容错空行",
+       "出错处理：文件不存在、内容被改坏时不能直接崩"
+     ]}
+   ]},
+   {name:"三个 C 小游戏（真正的核心练习）", items:[
+     {id:"cg_sokoban", n:"文字版推箱子", lv:"must", tm:"约 2 周", chk:"能连续玩通一关，箱子不会被推进墙里", ts:[
+       "用二维数组表示地图：墙 / 地板 / 箱子 / 目标点 / 玩家",
+       "读键盘输入（方向键或 WASD），更新玩家坐标",
+       "判定规则：箱子前方是空位才能推、全部箱子到目标才算过关",
+       "清屏 + 重绘，让字符画面真正「动」起来"
+     ]},
+     {id:"cg_snake", n:"控制台贪吃蛇", lv:"must", tm:"约 2 周", chk:"能玩、能死、能重开，最高分能存下来", ts:[
+       "用数组或环形缓冲维护身体坐标，理解「头进尾出」",
+       "固定节拍更新：sleep + 重绘，而不是死循环刷屏",
+       "碰撞判定：撞墙、撞到自己、吃到食物变长",
+       "分数与最高分落盘（复用前面的文件读写）"
+     ]},
+     {id:"cg_shooter", n:"文字版打飞机", lv:"must", tm:"约 2 周", chk:"屏幕上有敌人和子弹在动，击中会消失、分数会涨", ts:[
+       "结构体数组存敌人和子弹，每项带 alive 标志",
+       "生成逻辑：按计时或概率刷新敌人",
+       "每帧遍历更新位置，把死掉的标记为空位等待复用",
+       "碰撞：用坐标距离判断，而不是精确矩形"
+     ]}
+   ]},
+   {name:"工具与工作流", items:[
+     {id:"tool_git", n:"Git 基础", lv:"must", tm:"约 1 周", chk:"能从零建库、提交、推到 GitHub，并看懂 diff", ts:[
+       "init / add / commit / log / diff 日常五连",
+       ".gitignore 排除编译产物和编辑器垃圾文件",
+       "GitHub 建远程仓库、push、pull，处理一次冲突",
+       "学会看 diff 而不是靠眼睛比对两份文件"
+     ]},
+     {id:"tool_shell", n:"命令行基础", lv:"must", tm:"约 1 周", chk:"不用鼠标也能建目录、编译、运行一个 C 程序", ts:[
+       "路径：相对 / 绝对、cd / ls / cp / mv / rm",
+       "重定向与管道：> >> | 的实际用途",
+       "环境变量与 PATH，知道为什么「命令找不到」",
+       "一条命令编译并运行：gcc 加参数，会读报错里的行号"
+     ]},
+     {id:"tool_editor", n:"编辑器 / IDE 配置", lv:"must", tm:"约 3 天", chk:"敲代码时几乎不用碰鼠标", ts:[
+       "一个顺手的编辑器 + 语法高亮 + 自动补全",
+       "保存自动格式化、统一缩进",
+       "跳转到定义 / 查找引用，用来看别人的代码"
+     ]},
+     {id:"tool_en", n:"英文技术文档阅读", lv:"must", tm:"长期，每天 10 分钟", chk:"能靠搜索在官方文档里定位到某个 API 页", ts:[
+       "每天读一页官方文档，抓关键词不逐字翻译",
+       "用搜索直接跳到具体 API / 教程页",
+       "生词先猜后查，禁止整句机翻"
+     ]}
+   ]},
+   {name:"C# 预习（寒假，轻量）", items:[
+     {id:"cs_basic", n:"C# 语法与类型系统", lv:"later", tm:"寒假 1–2 周", chk:"能用 dotnet 建一个控制台项目并跑通", ts:[
+       "类与对象、字段 / 属性、构造函数",
+       "集合：List 与 Dictionary 的基本用法",
+       "null 与可空类型、字符串插值 $…{}",
+       "dotnet new console / dotnet run 跑起来"
+     ]},
+     {id:"cs_oop", n:"面向对象与组合优先", lv:"later", tm:"用到再学", chk:"能解释为什么游戏里组合比继承更好维护", ts:[
+       "继承 vs 组合的取舍，别滥用继承树",
+       "接口描述「能力」，一个类可实现多个接口",
+       "委托与事件——它就是 Godot 信号在 C# 里的样子"
+     ]}
+   ]}
+  ]
+},
+{
+  id:"p1", t:"Godot 引擎核心", w:"随后 6–9 个月",
+  goal:"一个引擎用透：能把任何「我想做个这样的」的小点子，独立翻译成场景 + 脚本 + 信号。",
+  gs:[
+   {name:"引擎心智模型", items:[
+     {id:"gd_editor", n:"Godot 4 编辑器", lv:"must", tm:"约 1 周", chk:"不看教程也能新建项目、加场景、运行调试", ts:[
+       "场景面板 / 检查器 / 文件系统 / 输出面板各干什么",
+       "新建场景、保存为 .tscn、设为启动场景",
+       "运行与「运行当前场景」的区别，中断点看输出"
+     ]},
+     {id:"gd_tree", n:"场景与节点树", lv:"must", tm:"约 1 周", chk:"能解释「场景即预制体、节点即组件」", ts:[
+       "节点树就是父子层级，位置、变换、可见性都随父节点",
+       "场景可嵌套：把敌人做成场景，在主场景里实例化多个",
+       "get_node / $ / %（唯一名）三种取节点方式"
+     ]},
+     {id:"gd_lifecycle", n:"Node 生命周期", lv:"must", tm:"约 3 天", chk:"能说出 _ready 与 _process 各在什么时候被调用", ts:[
+       "_enter_tree / _ready / _exit_tree 的调用时机",
+       "_process（每帧）与 _physics_process（固定步长）什么时候用哪个",
+       "queue_free 是延迟销毁，不是立即释放"
+     ]},
+     {id:"gd_inst", n:"场景实例化与复用", lv:"must", tm:"约 3 天", chk:"能不写死节点、用代码动态生成一堆敌人", ts:[
+       "preload / load 的区别与用法",
+       "instantiate() 之后必须 add_child 才会出现",
+       "把生成逻辑写进独立场景或 Autoload，别塞进主场景脚本"
+     ]},
+     {id:"gd_signal", n:"信号（Signal）", lv:"must", tm:"约 1 周", chk:"两个节点之间只靠信号通信，没有互相持有引用", ts:[
+       "内置信号：按钮 pressed、Area2D 的 body_entered",
+       "自定义信号 signal x / emit_signal / x.emit()",
+       "connect 的写法与「断开连接」什么时候需要",
+       "为什么信号优于到处 get_node 硬连线"
+     ]},
+     {id:"gd_export", n:"@export 与数据暴露", lv:"must", tm:"约 2 天", chk:"同一个敌人场景能在检查器里配出三种不同敌人", ts:[
+       "@export 把参数暴露到检查器",
+       "导出资源类型（Texture2D / PackedScene / Resource）",
+       "参数默认值 + 场景内覆盖，避免复制粘贴场景"
+     ]},
+     {id:"gd_autoload", n:"Autoload 与全局单例", lv:"must", tm:"约 2 天", chk:"全局状态（分数、设置）只在一处管理", ts:[
+       "Autoload 的注册方式与访问方式",
+       "适合放全局状态 / 音频管理 / 场景切换器",
+       "放太多进去会变成垃圾场，只放真正全局的"
+     ]}
+   ]},
+   {name:"脚本语言", items:[
+     {id:"gd_gdscript", n:"GDScript", lv:"must", tm:"约 2 周", chk:"能给静态类型写注释、不靠教程写出移动 + 攻击逻辑", ts:[
+       "静态类型标注 var hp: int = 3，让编辑器帮你查错",
+       "@onready、@export、@tool 三个注解的用途",
+       "class_name 注册类型、is / as 做类型判断",
+       "语法错误和运行时错误的区别，学会读错误堆栈"
+     ]},
+     {id:"gd_csharp", n:"Godot C# 接入", lv:"must", tm:"约 1 周", chk:"能用 C# 写出一个和 GDScript 等价的节点脚本", ts:[
+       "用 .NET 版 Godot，别用标准版折腾 C#",
+       "节点类映射：Node / Node2D / CharacterBody2D 继承关系",
+       "信号在 C# 里是 event，连接写法不同",
+       "两种语言可以混用，但别在一个项目里乱切换"
+     ]},
+     {id:"gd_resource", n:"自定义 Resource", lv:"later", tm:"约 3 天", chk:"敌人属性写在 .tres 里，不改代码就能调数值", ts:[
+       "extends Resource + @export 变量",
+       "新建 .tres 文件并挂到节点上",
+       "数据驱动：道具表 / 敌人表 / 关卡参数"
+     ]}
+   ]},
+   {name:"2D 玩法", items:[
+     {id:"gd_input", n:"输入处理与 InputMap", lv:"must", tm:"约 2 天", chk:"改键不用改代码，能手柄和键盘都玩", ts:[
+       "InputMap 里定义动作名，而不是写死按键常量",
+       "Input.get_axis / is_action_pressed 的用法",
+       "手柄映射与多设备兼容"
+     ]},
+     {id:"gd_sprite", n:"Sprite2D 与变换", lv:"must", tm:"约 2 天", chk:"角色能翻转、能调层级遮挡关系", ts:[
+       "纹理、偏移、水平翻转 flip_h",
+       "position / rotation / scale 与 z_index",
+       "CanvasLayer 做 UI 层，不与世界坐标混在一起"
+     ]},
+     {id:"gd_physics", n:"物理体与碰撞层", lv:"must", tm:"约 1 周", chk:"能说清为什么两个物体「碰不到」并修好它", ts:[
+       "StaticBody2D / RigidBody2D / CharacterBody2D / Area2D 各自适合什么",
+       "碰撞层与掩码（layer / mask）——90% 的「撞不到」都在这",
+       "碰撞形状与调试可见开关"
+     ]},
+     {id:"gd_charbody", n:"CharacterBody2D 移动", lv:"must", tm:"约 1 周", chk:"平台跳跃角色手感能自己调，不会穿墙或卡住", ts:[
+       "move_and_slide 与 velocity 的关系",
+       "重力、跳跃、二段跳、落脚判定 is_on_floor",
+       "斜坡与台阶的处理、max_slope_angle",
+       "手感的三个旋钮：加速度、跳跃高度、空中控制"
+     ]},
+     {id:"gd_area", n:"Area2D 触发与判定", lv:"must", tm:"约 3 天", chk:"拾取物、伤害区、触发器都能正确触发一次", ts:[
+       "body_entered / area_entered 的区别",
+       "伤害与拾取逻辑，避免每帧重复触发",
+       "一次性道具用 queue_free 或禁用 monitoring"
+     ]},
+     {id:"gd_tilemap", n:"TileMapLayer 关卡", lv:"must", tm:"约 3 天", chk:"能用图块在 30 分钟内搭出一个可玩的关卡", ts:[
+       "图块集（TileSet）的建立与地形自动拼接",
+       "分层：背景 / 地形 / 装饰 / 碰撞",
+       "用图块加碰撞，而不是手摆一堆碰撞体"
+     ]},
+     {id:"gd_camera", n:"Camera2D 与屏幕适配", lv:"must", tm:"约 2 天", chk:"角色移动时镜头跟随不抖、不出边界", ts:[
+       "跟随与平滑（position_smoothing）",
+       "限制边界 limit_*，别让镜头看到关卡外",
+       "像素完美缩放与项目分辨率设置"
+     ]},
+     {id:"gd_ui", n:"Control 与 UI 体系", lv:"must", tm:"约 1 周", chk:"主菜单、HUD、暂停菜单都能自适应窗口大小", ts:[
+       "Container 布局（VBox / HBox / Center / Margin）",
+       "锚点与自适应，窗口拉大拉小都不崩",
+       "Theme 统一字体与配色，别一个控件一个样式",
+       "HUD 用 CanvasLayer 盖在游戏画面上"
+     ]},
+     {id:"gd_anim", n:"AnimationPlayer 与 Tween", lv:"must", tm:"约 3 天", chk:"UI 出现、受击闪烁、血条变化都有动画", ts:[
+       "AnimationPlayer 做角色帧动画与 UI 动效",
+       "Tween 做程序化补间（移动、缩放、淡入淡出）",
+       "什么时候用动画、什么时候用代码插值"
+     ]},
+     {id:"gd_audio", n:"音频与总线", lv:"must", tm:"约 2 天", chk:"音效和 BGM 能分别调音量，切场景不断", ts:[
+       "AudioStreamPlayer / 2D / 3D 的区别",
+       "音频总线（Bus）分组，分别控制音效和音乐",
+       "BGM 跨场景不中断：放到 Autoload"
+     ]},
+     {id:"gd_save", n:"存档系统", lv:"must", tm:"约 3 天", chk:"关掉游戏再打开，进度还在", ts:[
+       "FileAccess + JSON 存取进度",
+       "ConfigFile 存设置（音量、按键）",
+       "版本兼容：加字段时旧存档不能读崩"
+     ]}
+   ]},
+   {name:"3D 与渲染（用到再学）", items:[
+     {id:"gd_3d", n:"3D 基础", lv:"later", tm:"做 3D 项目时", chk:"能搭出一个能用 WASD 走动、有光照的 3D 房间", ts:[
+       "MeshInstance3D、相机、光照与环境",
+       "3D 物理体与 CharacterBody3D 移动",
+       "导入模型与材质的基础设置"
+     ]},
+     {id:"gd_shader", n:"GDShader 与常见特效", lv:"later", tm:"需要特效时", chk:"能改现成 shader 的参数做出想要的效果", ts:[
+       "shader_type canvas_item 的基本结构",
+       "溶解、描边、水面——先抄再改",
+       "uniform 参数暴露到检查器里调"
+     ]},
+     {id:"gd_light", n:"2D 光照与氛围", lv:"later", tm:"需要氛围时", chk:"能让一个房间有白天/黑夜两种氛围", ts:[
+       "Light2D、法线贴图、阴影开关",
+       "CanvasModulate 做整体色调",
+       "夜景/地下室氛围的最小可行做法"
+     ]}
+   ]},
+   {name:"工程化", items:[
+     {id:"gd_debug", n:"调试与日志", lv:"must", tm:"约 3 天", chk:"遇到 bug 第一反应是打断点，而不是加 print 试", ts:[
+       "编辑器里断点调试、查看变量与调用栈",
+       "print / push_error / push_warning 的使用场合",
+       "读错误堆栈定位到具体脚本与行号"
+     ]},
+     {id:"gd_build", n:"导出 Windows / Web", lv:"must", tm:"约 2 天", chk:"能导出 exe 和网页版，发给同学直接能玩", ts:[
+       "导出模板安装与导出预设配置",
+       "构建体积精简（去掉不用的平台和资源）",
+       "Web 版发布到 itch.io，处理全屏与音频限制"
+     ]},
+     {id:"gd_perf", n:"性能剖析", lv:"later", tm:"卡了才学", chk:"能定位到是脚本、渲染还是物理拖慢了帧率", ts:[
+       "调试器里的监视器：FPS、对象数、绘制调用",
+       "Profiler 找最耗时的函数",
+       "常见优化：少用每帧 get_node、对象池、减少节点数"
+     ]},
+     {id:"gd_plugin", n:"编辑器插件与工具脚本", lv:"later", tm:"重复劳动出现时", chk:"能写个一键批量处理资源的小工具", ts:[
+       "@tool 脚本在编辑器里运行",
+       "批量导入 / 重命名 / 生成配置表",
+       "只在真的被重复劳动烦到时再学"
+     ]}
+   ]}
+  ]
+},
+{
+  id:"p2", t:"做出完整游戏", w:"随之展开 · 约 1 年",
+  goal:"唯一的指标：从立项到发布，把一整遍流程走完。做 3 个 1–3 个月的小项目，胜过憋一个两年的「大作」。",
+  gs:[
+   {name:"反教程重做（第一个项目）", items:[
+     {id:"pj_redo", n:"不看教程重写旧项目", lv:"must", tm:"约 2 周", chk:"从空项目重写出之前那个小游戏，全程只查 API 文档", ts:[
+       "旧项目留着当参考，但新建空项目从头做",
+       "卡住时只查官方 API 页，不回去看教程视频",
+       "用断点调试而不是疯狂 print 找 bug",
+       "记一份「哪里卡住了」的清单，那就是你的知识缺口"
+     ]},
+     {id:"pj_polish5", n:"完成度五件套", lv:"must", tm:"约 1 周", chk:"发给同学，他能不看说明自己玩完一局", ts:[
+       "主菜单：开始 / 继续 / 退出",
+       "暂停：ESC 暂停整棵树，恢复后状态不乱",
+       "重开：重置场景与全局状态，不残留上一局数据",
+       "音效：受击、拾取、按钮点击三处最基本的反馈",
+       "结算画面：得分 + 重玩按钮 + 一句评价"
+     ]},
+     {id:"pj_release", n:"发布到 itch.io", lv:"must", tm:"约 3 天", chk:"拿到一个能直接发给别人的链接", ts:[
+       "导出 Web 版并本地测试（注意音频要用户交互后才播）",
+       "做封面图和 3 张能看懂玩法的截图",
+       "页面文案：一句话卖点 + 操作说明 + 时长",
+       "上传后换台设备自测一遍"
+     ]}
+   ]},
+   {name:"架构与流程", items:[
+     {id:"ar_fsm", n:"游戏状态机", lv:"must", tm:"约 3 天", chk:"菜单/游戏中/暂停/结算的切换不再靠一堆 if", ts:[
+       "用 enum 或独立状态节点表示当前状态",
+       "状态的进入与退出各有一个统一入口",
+       "防止状态叠加：暂停时输入不能再驱动游戏"
+     ]},
+     {id:"ar_scene", n:"场景切换与加载", lv:"must", tm:"约 3 天", chk:"切换有过渡、不黑屏卡顿", ts:[
+       "change_scene_to_file 与手动实例化的区别",
+       "过渡动画 / 加载进度条",
+       "资源预加载，避免切场景时卡一下"
+     ]},
+     {id:"ar_bus", n:"事件总线与全局管理", lv:"must", tm:"约 3 天", chk:"跨场景通信不靠节点互相持有引用", ts:[
+       "用 Autoload 做信号中心：分数变化、玩家死亡、关卡完成",
+       "订阅与退订，避免节点已释放还在收信号",
+       "判断标准：只有「多方关心」的事件才上总线"
+     ]},
+     {id:"ar_data", n:"数据驱动配置", lv:"must", tm:"约 1 周", chk:"改数值只改表格，不用改代码重新导", ts:[
+       "敌人 / 道具 / 关卡参数放进 Resource 或 CSV",
+       "加载时的校验：字段缺失要有默认值",
+       "数值表纳入版本管理，改动能回滚"
+     ]}
+   ]},
+   {name:"手感与设计", items:[
+     {id:"ds_proto", n:"纸上原型与快速验证", lv:"must", tm:"约 2 天", chk:"半天内能判断一个玩法值不值得做下去", ts:[
+       "先用纸和笔把规则写清楚，一行一句话",
+       "做最丑的最小可玩版本（方块就够）",
+       "找 1 个人试玩 10 分钟，别看他的嘴看他的手",
+       "写下一句结论：好玩 / 不好玩，卡在哪"
+     ]},
+     {id:"ds_input", n:"输入缓冲与土狼时间", lv:"must", tm:"约 2 天", chk:"跳跃不再出现「明明按了却没反应」", ts:[
+       "跳跃缓冲：落地前 0.1 秒内按下也算数",
+       "土狼时间：刚离开平台的一小段时间内仍可跳",
+       "把这些参数抽出来，方便反复调"
+     ]},
+     {id:"ds_juice", n:"Juice 与手感打磨", lv:"must", tm:"约 1 周", chk:"同一个动作加上反馈后，明显更「爽」", ts:[
+       "屏幕震动、命中停顿（hit stop）、缩放弹跳",
+       "粒子、拖尾、闪白",
+       "音效与视觉反馈对齐到同一帧",
+       "缓动曲线（ease in/out）而不是线性变化"
+     ]},
+     {id:"ds_camera", n:"相机与打击感", lv:"must", tm:"约 2 天", chk:"镜头会跟着情绪走，而不是死跟角色", ts:[
+       "震动强度分级：轻击 / 重击 / 死亡",
+       "关键时刻镜头推近或拉远",
+       "镜头死区与平滑跟随，避免抖动"
+     ]},
+     {id:"ds_level", n:"关卡设计基础", lv:"later", tm:"约 1 周", chk:"一关里有教学、有挑战、有喘息", ts:[
+       "用关卡本身教机制，而不是弹说明文字",
+       "难度阶梯：新机制先给安全环境练手",
+       "检查点与节奏：紧张—放松交替"
+     ]},
+     {id:"ds_balance", n:"难度曲线与数值", lv:"later", tm:"约 1 周", chk:"前三分钟不劝退，后半段有压力", ts:[
+       "首关给足容错，不要一上来就死",
+       "数值用统一单位与倍率，别到处硬编码",
+       "记录玩家死在哪里，用数据调难度"
+     ]}
+   ]},
+   {name:"第一个完整项目 → 三个小项目", items:[
+     {id:"pr_scope", n:"立项与范围控制", lv:"must", tm:"约 1 天", chk:"能一句话说清这个项目 1–3 个月能做完", ts:[
+       "一句话说清：玩家做什么、为什么有意思",
+       "砍到只剩一个核心循环，其他全砍",
+       "写下「这次不做什么」的清单，贴在显眼处"
+     ]},
+     {id:"pr_iter", n:"里程碑与迭代", lv:"must", tm:"贯穿项目", chk:"每周都有一个能运行的版本", ts:[
+       "用清单/看板管理任务，一次只做一件",
+       "每周产出一次可玩构建，哪怕是内部版",
+       "卡住超过 2 小时就换思路或直接简化需求"
+     ]},
+     {id:"pr_test", n:"玩家测试与反馈", lv:"must", tm:"约 3 天", chk:"拿到 5 个陌生人的真实反馈", ts:[
+       "别解释玩法，坐下来看人玩",
+       "记录他卡住、困惑、放弃的确切位置",
+       "只改最痛的那一个问题，别一次改十处"
+     ]},
+     {id:"pr_post", n:"发布与复盘", lv:"must", tm:"每个项目结束", chk:"每个项目都留下一页复盘", ts:[
+       "数据：多少人玩、平均时长、卡在哪",
+       "时间账：哪块超支最严重",
+       "下一版不做什么、要复用哪部分代码"
+     ]},
+     {id:"pr_three", n:"第二、第三个项目", lv:"must", tm:"大一下 — 大二上", chk:"半年内手里有 3 个带链接的作品", ts:[
+       "换一个类型或机制做第二个，别重复自己",
+       "其中一个必须是「小而完整」，不是「大而未完成」",
+       "整理成作品集页面：链接 + GIF + 一句话说明你做了什么"
+     ]}
+   ]}
+  ]
+},
+{
+  id:"p3", t:"发布与商业化", w:"有作品之后 · 随项目推进",
+  goal:"让作品被看见、被玩、被付费；同时看清独立开发的商业现实，不做浪漫化的赌博。",
+  gs:[
+   {name:"上架与包装", items:[
+     {id:"bp_store", n:"商店页与截图", lv:"must", tm:"约 3 天", chk:"陌生人看 10 秒能明白这是什么游戏", ts:[
+       "首图/胶囊图的构图：主体大、文字少",
+       "3–5 张截图讲一个顺序：什么游戏 → 怎么玩 → 有什么特色",
+       "文案：一句话卖点 + 玩法要点 + 时长与标签"
+     ]},
+     {id:"bp_trailer", n:"预告片与 GIF", lv:"later", tm:"约 1 周", chk:"15 秒内展示核心玩法", ts:[
+       "录屏与最基础的剪辑（剪辑软件或 Godot 内录）",
+       "前 3 秒必须出现最有趣的画面",
+       "GIF 用于社媒传播，体积要压小"
+     ]},
+     {id:"bp_price", n:"定价与打折", lv:"later", tm:"需要时了解", chk:"知道自己这类游戏的价格区间", ts:[
+       "看同类作品的定价与销量评价",
+       "首发折扣与节日促销的基本玩法",
+       "免费 + 付费的区别：曝光 vs 收入"
+     ]},
+     {id:"bp_process", n:"上架流程", lv:"must", tm:"约 3 天", chk:"能独立把游戏上到 itch.io，并了解 Steam 的门槛", ts:[
+       "itch.io：建页面、传构建、设置价格与标签",
+       "Steam：100 美元上架费、审核周期、商店页素材规格",
+       "版本更新与 changelog 的写法"
+     ]}
+   ]},
+   {name:"曝光与社群", items:[
+     {id:"cm_devlog", n:"开发日志与社群", lv:"must", tm:"长期，每周一条", chk:"每周稳定产出一条进度内容", ts:[
+       "选一个主阵地（B站 / 小红书 / X / Reddit）先做透一个",
+       "固定格式：本周做了什么 + 一个 GIF + 一个问题",
+       "沉淀玩家：Discord 或 QQ 群，哪怕只有 20 人"
+     ]},
+     {id:"cm_wishlist", n:"愿望单与曝光渠道", lv:"later", tm:"要上 Steam 时", chk:"知道愿望单主要从哪来", ts:[
+       "Steam 愿望单的获取路径与新品节机制",
+       "参加线上节日/展会（Steam 新品节、itch 活动）",
+       "给主播和媒体发邮件的基本格式"
+     ]},
+     {id:"cm_data", n:"数据分析", lv:"later", tm:"有玩家后", chk:"能用数据回答「玩家在哪流失」", ts:[
+       "记录游玩时长、关卡通过率、退出点",
+       "用 itch 自带统计或免费埋点工具",
+       "根据数据改造前 5 分钟，那是留存的主战场"
+     ]},
+     {id:"cm_feedback", n:"反馈处理与迭代", lv:"must", tm:"持续", chk:"收到差评不破防，能分类处理", ts:[
+       "把反馈分成：崩溃 / 设计 / 口味三类",
+       "优先修崩溃与卡死，口味类可以不改",
+       "建一个 issue 列表，公开进度反而增加好感"
+     ]}
+   ]},
+   {name:"合规与商业现实", items:[
+     {id:"lg_license", n:"版权与素材许可", lv:"must", tm:"约 2 天", chk:"清楚哪些素材能商用、哪些不能", ts:[
+       "CC0 / CC-BY / 署名要求各是什么意思",
+       "字体与音乐是最容易踩坑的两类素材",
+       "保留素材来源记录，被质疑时能拿出证明"
+     ]},
+     {id:"lg_tax", n:"收款与税务（了解即可）", lv:"later", tm:"有收入时", chk:"知道海外平台怎么给你结算", ts:[
+       "itch.io / Steam 的结算方式与门槛",
+       "个人 vs 公司主体的区别",
+       "先了解概念，真有钱进账再深入研究"
+     ]},
+     {id:"lg_reality", n:"独立开发的商业现实", lv:"must", tm:"现在就要认清", chk:"能用数字说出成功率，而不是靠感觉", ts:[
+       "绝大多数独立游戏赚不到钱，这是统计事实不是诅咒",
+       "降低单次失败代价：短周期、低成本、快速发布",
+       "永远保留「能就业」这条能力，它是你的安全网"
+     ]}
+   ]}
+  ]
+},
+{
+  id:"p4", t:"就业安全网", w:"与作品线并行 · 持续",
+  goal:"让「独立游戏失败」不等于「简历空白」：把基础、工程能力、作品、求职节奏四件事做实，这是你的兜底。",
+  gs:[
+   {name:"计算机基础（课上有，别划水）", items:[
+     {id:"jc_ds", n:"数据结构与算法", lv:"must", tm:"约一学期", chk:"能手写栈/队列/链表/哈希表，并说清各自复杂度", ts:[
+       "数组、链表、栈、队列：各手写实现一遍",
+       "哈希表：原理、冲突处理、为什么查找是 O(1)",
+       "树与图：二叉树遍历、BFS/DFS",
+       "复杂度：能判断一段代码是 O(1) 还是 O(n²)"
+     ]},
+     {id:"jc_os", n:"操作系统基础", lv:"later", tm:"跟着课程", chk:"能解释进程、线程、内存分页", ts:[
+       "进程与线程的区别、上下文切换",
+       "内存管理：分页、虚拟内存、缺页",
+       "死锁的四个必要条件、简单调度策略",
+       "文件系统与 I/O 的基本概念"
+     ]},
+     {id:"jc_net", n:"计算机网络", lv:"later", tm:"跟着课程", chk:"能说清一次 HTTP 请求经过了什么", ts:[
+       "TCP/IP 分层与各自职责",
+       "HTTP 请求 / 响应、状态码",
+       "DNS 解析流程",
+       "用抓包工具看一眼真实流量"
+     ]},
+     {id:"jc_db", n:"数据库基础", lv:"later", tm:"跟着课程", chk:"能写带 JOIN 的查询、说出索引的作用", ts:[
+       "表设计、主键、外键、范式（够用就行）",
+       "SQL 增删改查与 JOIN",
+       "事务与隔离级别概念",
+       "用 SQLite 给游戏存一份数据，跑通一次"
+     ]}
+   ]},
+   {name:"工程能力（比刷算法更决定能不能录用）", items:[
+     {id:"en_py", n:"第二门语言（Python / Go）", lv:"must", tm:"约 1 个月", chk:"能用它写一个自动处理文件的小工具", ts:[
+       "语法与标准库：文件、路径、JSON、正则",
+       "写一个批量处理资源/表格的脚本（真的会用到）",
+       "打包成别人双击也能跑的工具"
+     ]},
+     {id:"en_linux", n:"Linux 与 Shell", lv:"must", tm:"约 2 周", chk:"能在一台服务器上把程序跑起来", ts:[
+       "常用命令、权限、软链接",
+       "ssh 登录、scp 传文件",
+       "让程序后台常驻（systemd / nohup）",
+       "看日志定位「为什么起不来」"
+     ]},
+     {id:"en_test", n:"测试与 CI", lv:"must", tm:"约 1 周", chk:"推送代码后自动跑测试并出结果", ts:[
+       "单元测试的基本套路：一个函数一个用例",
+       "GitHub Actions 跑测试与构建",
+       "红—绿—重构的开发节奏"
+     ]},
+     {id:"en_read", n:"读别人的代码", lv:"must", tm:"持续", chk:"能在陌生仓库里找到某个功能的实现", ts:[
+       "从入口文件顺藤摸瓜，先画调用关系再读细节",
+       "用 git log / blame 看某行代码为什么这么写",
+       "给一个开源项目提 PR，改文档也算"
+     ]},
+     {id:"en_std", n:"工程规范", lv:"later", tm:"持续", chk:"别人能按 README 一键跑起你的项目", ts:[
+       "命名、目录结构、注释的取舍",
+       "commit message 写清「做了什么、为什么」",
+       "README：怎么跑、依赖什么、目录说明"
+     ]}
+   ]},
+   {name:"作品与简历", items:[
+     {id:"jb_portfolio", n:"GitHub 作品集", lv:"must", tm:"约 1 周", chk:"3 个置顶仓库，每个都有 GIF 和跑起来的说明", ts:[
+       "每个仓库的 README：截图/GIF + 怎么玩 + 你负责哪部分",
+       "把最好的 3–5 个项目置顶",
+       "提交记录要连续，别只有一个「init」大提交"
+     ]},
+     {id:"jb_resume", n:"简历撰写", lv:"must", tm:"约 3 天", chk:"一页纸，每个项目都有可量化的结果", ts:[
+       "结构：技能 / 项目 / 教育 / 其他，一页装得下",
+       "项目写「做了什么 + 用了什么 + 结果数字」",
+       "删掉「了解 C 语言」「熟悉 Office」这类空话"
+     ]},
+     {id:"jb_alg", n:"算法面试准备", lv:"must", tm:"大三前开始", chk:"常见题型能不看答案写出并通过", ts:[
+       "数组、字符串、哈希表",
+       "双指针、滑动窗口",
+       "二叉树遍历与递归",
+       "每天 1 题保持手感，别临考突击"
+     ]},
+     {id:"jb_behavior", n:"行为面试", lv:"later", tm:"面试前", chk:"能用 STAR 讲清一次失败和一次协作", ts:[
+       "准备 3 个故事：最难的 bug、一次协作、一次失败",
+       "STAR 结构：情境—任务—行动—结果",
+       "讲失败必须带「学到了什么、后来怎么改」"
+     ]}
+   ]},
+   {name:"求职节奏（时间线就是一切）", items:[
+     {id:"job_sophomore", n:"大二暑期实习", lv:"must", tm:"大二上 12 月起投", chk:"拿到一段「有代码可写」的实习", ts:[
+       "目标放现实：中小公司、外包、开源导师项目；游戏大厂基本无望",
+       "时间线：大二上 12 月开始投日常实习",
+       "投之前简历上至少要有 2 个完整项目"
+     ]},
+     {id:"job_junior", n:"大三暑期实习（最关键）", lv:"must", tm:"大三上 3–4 月", chk:"大三结束前有实习经历，秋招才有底气", ts:[
+       "大厂暑期实习 3–4 月开投，提前批更早",
+       "流程：笔试 + 2–3 轮技术面",
+       "没有实习经历，秋招会非常被动——这是硬门槛"
+     ]},
+     {id:"job_referral", n:"内推与人脉", lv:"later", tm:"持续", chk:"至少有 3 条有效内推渠道", ts:[
+       "学长学姐、社团、开源社区",
+       "在技术社区持续输出（博客、回答问题）",
+       "别一上来就求内推，先让人觉得你靠谱"
+     ]},
+     {id:"job_fallback", n:"秋招与兜底选项", lv:"must", tm:"大三下 — 大四上", chk:"清楚自己的兜底路径，不做单点赌博", ts:[
+       "秋招 7–10 月，春招次年 2–4 月",
+       "兜底岗位：游戏公司的工具/引擎向、普通软件开发",
+       "独立游戏经历是加分项，但不能是唯一出路"
+     ]}
+   ]}
+  ]
+},
+{
+  id:"p5", t:"长期进阶", w:"长期 · 按需深挖",
+  goal:"这些是「让作品上一个台阶」的东西，不是入门必修。先做作品，遇到天花板再回来学。",
+  gs:[
+   {name:"图形学与渲染", items:[
+     {id:"gx_math", n:"线性代数与变换", lv:"later", tm:"约 1 个月", chk:"能手算 2D 旋转矩阵，看懂 4×4 变换矩阵", ts:[
+       "向量点积、叉积的几何意义",
+       "矩阵乘法与坐标变换的顺序",
+       "齐次坐标与 3D 投影"
+     ]},
+     {id:"gx_pipeline", n:"渲染管线", lv:"later", tm:"约 2 周", chk:"能说清一个三角形从顶点到像素经历了什么", ts:[
+       "顶点 → 图元装配 → 光栅化 → 片元着色 → 输出",
+       "光照模型与法线的作用",
+       "前向渲染 vs 延迟渲染的概念差别"
+     ]},
+     {id:"gx_post", n:"后处理与画面风格", lv:"later", tm:"约 1 周", chk:"能自己写一个屏幕特效", ts:[
+       "把屏幕纹理采样到全屏 quad",
+       "色调、噪点、描边、故障风",
+       "性能代价：全屏 pass 的像素填充"
+     ]}
+   ]},
+   {name:"系统与规模", items:[
+     {id:"sy_ecs", n:"ECS 架构", lv:"skip", tm:"了解即可", chk:"知道它解决什么问题、什么时候不需要", ts:[
+       "数据与行为分离的动机：缓存友好",
+       "几千个对象以上才值得考虑",
+       "小项目用它只会拖慢开发"
+     ]},
+     {id:"sy_net", n:"网络同步", lv:"later", tm:"做联机时", chk:"能做出一个两人联机的小 demo", ts:[
+       "权威服务器 vs P2P 的取舍",
+       "状态同步、插值与预测",
+       "延迟补偿的概念"
+     ]},
+     {id:"sy_phys", n:"物理引擎原理", lv:"later", tm:"遇到怪问题时", chk:"知道角色为什么会卡在墙角", ts:[
+       "碰撞检测：粗筛（broadphase）+ 精算（narrowphase）",
+       "求解器、穿透修正、连续碰撞检测",
+       "基本不需要自己写，理解即可"
+     ]},
+     {id:"sy_src", n:"引擎源码阅读", lv:"skip", tm:"真的需要时", chk:"能从报错堆栈反查到引擎里的实现", ts:[
+       "从崩溃堆栈反查源码位置",
+       "完整编译一次引擎（很花时间）",
+       "只在「必须改引擎」时才做"
+     ]}
+   ]},
+   {name:"独立开发的长期能力", items:[
+     {id:"ind_pm", n:"项目管理与时间估算", lv:"must", tm:"持续", chk:"预估功能耗时误差不超过一倍", ts:[
+       "把任务拆到 2 小时内能完成",
+       "记录实际耗时，校准下一次估算",
+       "永远留 30% 缓冲时间"
+     ]},
+     {id:"ind_team", n:"团队与协作", lv:"later", tm:"需要时", chk:"能和美术/音乐合作而项目不翻车", ts:[
+       "分工与交付标准（格式、尺寸、命名）",
+       "用 Git/网盘管理资源与版本",
+       "分成与版权先谈清楚，再谈感情"
+     ]},
+     {id:"ind_pub", n:"发行商与合作", lv:"later", tm:"项目有戏时", chk:"知道发行商提供什么、要什么回报", ts:[
+       "发行商能给的：钱、曝光、本地化、平台关系",
+       "Pitch deck 的基本结构（一句话 + GIF + 数据）",
+       "什么时候完全不需要发行商"
+     ]},
+     {id:"ind_ship", n:"持续发布的能力", lv:"must", tm:"长期", chk:"一年至少一次公开发布", ts:[
+       "固定发布节奏，哪怕是小作品",
+       "每次发布写开发日志与复盘",
+       "沉淀自己的方法论，而不是每次都从零摸索"
+     ]}
+   ]}
+  ]
+},
+];
+
+const KEY="godot-roadmap-v2", KEY1="godot-roadmap-v1";
+let state={};
+try{ state=JSON.parse(localStorage.getItem(KEY)||"{}")||{}; }catch(e){ state={}; }
+/* 从旧版（按整节点存进度）尽力迁移一次 */
+(function(){
+  if(localStorage.getItem(KEY)) return;
+  let old=null;
+  try{ old=JSON.parse(localStorage.getItem(KEY1)||"null"); }catch(e){}
+  if(!old) return;
+  PHASES.forEach(p=>p.gs.forEach(g=>g.items.forEach(it=>{
+    const v=old[it.id];
+    if(v===2) it.ts.forEach((_,i)=>state[it.id+"::"+i]=2);
+    else if(v===1 && it.ts.length) state[it.id+"::0"]=1;
+  })));
+  save();
+})();
+
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} }
+function tg(g,i){ return state[g.id+"::"+i]||0; }
+function tset(g,i,v){ if(v===0) delete state[g.id+"::"+i]; else state[g.id+"::"+i]=v; save(); }
+function gstat(g){
+  let d=0,c=0;
+  g.ts.forEach((_,i)=>{ const v=tg(g,i); if(v===2)d++; else if(v===1)c++; });
+  if(d===g.ts.length) return 2;
+  if(d>0||c>0) return 1;
+  return 0;
+}
+const SLABEL=["未学","学习中","已学"];
+
+/* ---- 视图状态 ---- */
+let filter="all", hideSkip=false, q="", closed={};
+
+function allGoals(){
+  const out=[];
+  PHASES.forEach((p,pi)=>p.gs.forEach(g=>g.items.forEach(it=>out.push({p,pi,it,g:g.name}))));
+  return out;
+}
+function matches(it){
+  if(hideSkip && it.lv==="skip") return false;
+  if(filter==="must" && it.lv!=="must") return false;
+  if(filter==="0"||filter==="1"||filter==="2"){
+    const s=gstat(it); if(String(s)!==filter) return false;
+  }
+  if(q){
+    const s=(it.n+" "+it.chk+" "+it.ts.join(" ")).toLowerCase();
+    if(s.indexOf(q.toLowerCase())<0) return false;
+  }
+  return true;
+}
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+function render(){
+  const host=document.getElementById("app").firstElementChild;
+  let html="", shown=0;
+  PHASES.forEach((p,pi)=>{
+    const items=[];
+    p.gs.forEach(g=>g.items.forEach(it=>items.push(it)));
+    const counted=items.filter(it=>it.lv!=="skip");
+    let tot=0, done=0;
+    counted.forEach(it=>{ tot+=it.ts.length; it.ts.forEach((_,i)=>{ if(tg(it,i)===2) done++; }); });
+    const pct=tot?Math.round(done*100/tot):0;
+
+    let body="";
+    p.gs.forEach(g=>{
+      const vis=g.items.filter(matches);
+      if(!vis.length) return;
+      shown+=vis.length;
+      body+='<div class="grp"><div class="grp-h">'+esc(g.name)+'</div>';
+      vis.forEach(it=>{
+        const s=gstat(it);
+        const d=it.ts.filter((_,i)=>tg(it,i)===2).length;
+        const isClosed=!!closed[it.id];
+        body+='<div class="goal s'+s+(isClosed?" closed":"")+'" data-id="'+it.id+'">'+
+          '<div class="goal-h" data-act="toggle">'+
+            '<span class="chev">▼</span>'+
+            '<span class="gname">'+esc(it.n)+'</span>'+
+            '<span class="lv '+it.lv+'">'+(it.lv==="must"?"必修":it.lv==="later"?"用到再学":"可跳过")+'</span>'+
+            (it.tm?'<span class="tm">'+esc(it.tm)+'</span>':'')+
+            '<span class="gp"><span class="tiny">'+d+'/'+it.ts.length+'</span>'+
+            '<span class="gstat s'+s+'">'+SLABEL[s]+'</span></span>'+
+          '</div>'+
+          '<div class="goal-b">'+
+            (it.chk?'<div class="chk"><b>验收</b>：'+esc(it.chk)+'</div>':'')+
+            '<div class="tasks">'+
+            it.ts.map((t,i)=>{
+              const v=tg(it,i);
+              return '<div class="task t'+v+'" data-act="task" data-i="'+i+'"><span class="bd"></span><span class="tx">'+esc(t)+'</span></div>';
+            }).join("")+
+            '</div>'+
+          '</div>'+
+        '</div>';
+      });
+      body+='</div>';
+    });
+    if(!body) return;
+
+    html+='<section class="phase"><div class="phase-h">'+
+      '<span class="ptag">阶段 '+pi+'</span>'+
+      '<h2 class="ptitle">'+esc(p.t)+'</h2>'+
+      '<span class="pwhen">'+esc(p.w)+'</span>'+
+      '<div class="pmeta"><div class="mb"><i style="width:'+pct+'%"></i></div><span>'+done+'/'+tot+'</span></div>'+
+      '</div>'+
+      '<p class="pgoal"><b>阶段目标</b>：'+esc(p.goal)+'</p>'+
+      body+'</section>';
+  });
+
+  host.innerHTML = shown? html : '<div class="empty">没有匹配的条目，换个筛选或者清空搜索试试。</div>';
+  refreshStats();
+}
+
+function refreshStats(){
+  let tot=0,done=0,c1=0,c0=0;
+  allGoals().forEach(({it})=>{
+    if(it.lv==="skip") return;
+    tot+=it.ts.length;
+    it.ts.forEach((_,i)=>{ const v=tg(it,i); if(v===2)done++; else if(v===1)c1++; else c0++; });
+  });
+  const pct=tot?Math.round(done*100/tot):0;
+  document.getElementById("barAll").style.width=pct+"%";
+  document.getElementById("pctAll").textContent=pct+"%";
+  document.getElementById("fracAll").textContent=done+"/"+tot;
+  document.getElementById("n2").textContent=done;
+  document.getElementById("n1").textContent=c1;
+  document.getElementById("n0").textContent=c0;
+  const sk=allGoals().filter(x=>x.it.lv==="skip").reduce((a,x)=>a+x.it.ts.length,0);
+  document.getElementById("skipNote").textContent="另有 "+sk+" 项可跳过内容不计入进度";
+
+  // 接下来该做的 3 件事
+  const nl=[], doneCount={};
+  allGoals().forEach(({p,it})=>{
+    if(it.lv==="skip") return;
+    it.ts.forEach((t,i)=>{ if(tg(it,i)!==2) nl.push({phase:p.t,goal:it.n,task:t}); });
+  });
+  const list=document.getElementById("nextList");
+  const show=nl.slice(0,3);
+  list.innerHTML = show.length
+    ? show.map(x=>'<li>'+esc(x.task)+'<span class="tiny"> · '+esc(x.goal)+' · '+esc(x.phase)+'</span></li>').join("")
+    : '<li style="list-style:none;margin-left:-20px;color:#56d364">全部完成了 🎉</li>';
+  document.getElementById("nextHint").textContent = show.length
+    ? "按顺序取前 3 个未完成的小目标；标成「已学」后自动往下走。"
+    : "整张图已清空，可以考虑做下一个项目了。";
+}
+
+/* ---- 交互 ---- */
+document.getElementById("app").addEventListener("click",e=>{
+  const goal=e.target.closest(".goal"); if(!goal) return;
+  const id=goal.dataset.id;
+  const obj=allGoals().find(x=>x.it.id===id); if(!obj) return;
+  const it=obj.it;
+
+  const taskEl=e.target.closest(".task");
+  if(taskEl){
+    const i=+taskEl.dataset.i;
+    const cur=tg(it,i);
+    const nxt=e.shiftKey? (cur+2)%3 : (cur+1)%3;
+    tset(it,i,nxt);
+    reRenderGoal(goal,it);
+    refreshStats();
+    return;
+  }
+  const head=e.target.closest(".goal-h");
+  if(head){
+    if(e.shiftKey){
+      const cur=gstat(it);
+      const nxt=(cur+1)%3;
+      it.ts.forEach((_,i)=>tset(it,i,nxt));
+      reRenderGoal(goal,it); refreshStats();
+    }else{
+      closed[id]=!closed[id];
+      goal.classList.toggle("closed",!!closed[id]);
+    }
+  }
+});
+
+function reRenderGoal(el,it){
+  const s=gstat(it), d=it.ts.filter((_,i)=>tg(it,i)===2).length;
+  el.className="goal s"+s+(el.classList.contains("closed")?" closed":"");
+  el.querySelector(".gstat").className="gstat s"+s;
+  el.querySelector(".gstat").textContent=SLABEL[s];
+  el.querySelector(".gp .tiny").textContent=d+"/"+it.ts.length;
+  el.querySelectorAll(".task").forEach((t,i)=>{
+    const v=tg(it,i);
+    t.className="task t"+v;
+  });
+}
+
+document.getElementById("filters").addEventListener("click",e=>{
+  const chip=e.target.closest(".chip"); if(!chip) return;
+  if(chip.id==="hideSkip"){
+    hideSkip=!hideSkip; chip.classList.toggle("on",hideSkip); render(); return;
+  }
+  document.querySelectorAll("#filters .chip[data-f]").forEach(c=>c.classList.remove("on"));
+  chip.classList.add("on"); filter=chip.dataset.f; render();
+});
+
+let qt=null;
+document.getElementById("q").addEventListener("input",e=>{
+  clearTimeout(qt);
+  qt=setTimeout(()=>{ q=e.target.value.trim(); render(); },120);
+});
+
+document.getElementById("exportBtn").onclick=()=>{
+  const blob=new Blob([JSON.stringify({v:2,at:new Date().toISOString(),state},null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="godot-roadmap-backup.json";
+  a.click(); URL.revokeObjectURL(a.href);
+};
+document.getElementById("importBtn").onclick=()=>{
+  const inp=document.createElement("input"); inp.type="file"; inp.accept=".json,application/json";
+  inp.onchange=()=>{
+    const f=inp.files[0]; if(!f) return;
+    const r=new FileReader();
+    r.onload=()=>{
+      try{
+        const o=JSON.parse(r.result);
+        const s=o.state||o;
+        if(!s||typeof s!=="object") throw new Error("格式不对");
+        state=s; save(); render();
+        alert("已恢复进度。");
+      }catch(err){ alert("恢复失败："+err.message); }
+    };
+    r.readAsText(f);
+  };
+  inp.click();
+};
+document.getElementById("resetBtn").onclick=()=>{
+  if(!confirm("清空全部进度？此操作不可撤销。")) return;
+  state={}; save(); render();
+};
+
+render();
+</script>
+</body>
+</html>
